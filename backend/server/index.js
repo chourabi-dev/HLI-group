@@ -1,7 +1,16 @@
 const express = require('express')
 const { addNewTodo, getTodosList, deleteTodo, updateTodo } = require('./modules/todo')
 const app = express()
-const port = 8080
+const port = 8080 
+const fs = require('fs');
+var cors = require('cors')
+
+
+app.use(cors())
+
+
+var morgan = require('morgan');
+app.use(morgan('combined', { stream : fs.createWriteStream('./logs/logs.txt') }))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

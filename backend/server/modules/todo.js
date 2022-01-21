@@ -1,5 +1,7 @@
 const { ObjectId } = require('mongodb');
 const URL = require('url');
+const fs = require('fs');
+
 
 exports.addNewTodo = function (req, res) {
 
@@ -67,7 +69,14 @@ exports.getTodosList = function (req, res) {
         })
 
         }).catch((err) => {
-            console.log(err);
+            const errMsg = err.toString();
+            const errDate = new Date().toString();
+
+            fs.appendFile('./logs/error.txt',errDate+' '+errMsg+'\n',function(err){
+                throw err;
+
+            })
+
             res.send({ success: false, message: "Something went wrong" });
         }); 
 }

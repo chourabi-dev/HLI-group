@@ -7,12 +7,39 @@ export default class HomePage extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            todos:[
-                { id:1, title:"custom title", message:"hello world", date:new Date() },
-                { id:2, title:"custom title", message:"hello world", date:new Date() },
-              
-            ]
+            todos:[]
         }
+
+
+        this.initData = this.initData.bind(this);
+    }
+
+
+    initData(){
+        // CALL API
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:8080/V1/API/todo", requestOptions)
+        .then(response => response.json())
+        .then(result =>{
+            console.log(result)
+
+            this.setState({
+                todos : result
+            })
+        })
+        .catch(error => console.log('error', error));
+    }
+
+    componentDidMount(){
+        this.initData();
     }
 
 
@@ -33,7 +60,7 @@ export default class HomePage extends React.Component{
                     
                     {
                         this.state.todos.map((todo)=>{
-                            return(<TodoItem key={todo.id} title={ todo.title } content={ todo.message } date={ todo.date } />);
+                            return(<TodoItem  refresh={ this.initData }  key={todo._id} id={todo._id} title={ todo.title } content={ todo.content } date={ todo.date } />);
                         })
                     }
 

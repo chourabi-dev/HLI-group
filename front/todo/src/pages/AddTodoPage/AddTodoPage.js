@@ -7,11 +7,48 @@ export default class AddTodoPage extends React.Component{
 
         this.state={
            content:"",
+           title:"",
            isLoading:false,
            successMsg:'',
            errorMsg:''
             
         }
+    }
+
+    createTodo(){
+
+        this.setState({
+            isLoading : true
+        })
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({"title":this.state.title,"content":this.state.content});
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:8080/V1/API/todo", requestOptions)
+        .then(response => response.json())
+        .then(result =>{
+            if (result.success === true) {
+                this.setState({
+                    successMsg: result.message
+                })
+            } else {
+                this.setState({
+                    errorMsg: result.message
+                })
+            }
+        })
+        .catch(error => console.log('error', error)).finally(()=>{
+            this.setState({isLoading:false})
+        })
     }
 
 
@@ -28,19 +65,23 @@ export default class AddTodoPage extends React.Component{
                     
                     // READY TO SEND THE CALL TO THE SERVER !!!
 
-                    this.setState({
-                        isLoading:true
-                    })
+                   
 
-                    setTimeout(() => {
-                        this.setState({
-                            isLoading:false,
-                            successMsg:'ok !!'
-                        })
-                    }, 4000);
+                    
+                    this.createTodo();
 
 
                 }} >
+                    <label>Title</label>
+                    <input onChange={(event)=>{
+                        const val = event.target.value;
+
+                        this.setState({
+                            title:val
+                        })
+
+                    }}  className="form-control"   />
+                    <label>Content</label>
                     <textarea onChange={(event)=>{
                         const val = event.target.value;
 
