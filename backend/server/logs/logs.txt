@@ -1,2 +1,0 @@
-::1 - - [27/Jan/2022:14:38:58 +0000] "POST /V1/API/auth HTTP/1.1" 200 169 "-" "PostmanRuntime/7.26.8"
-::1 - - [27/Jan/2022:14:39:10 +0000] "GET /V1/API/todo HTTP/1.1" 200 459 "-" "PostmanRuntime/7.26.8"

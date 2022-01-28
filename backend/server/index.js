@@ -15,7 +15,7 @@ app.use(cors())
 
 app.use(function(req,res,next){
 
-  if (req.url==="/V1/API/auth") {
+  if ( req.url==="/v1/API/auth" || req.url==="/V1/API/create-account" ) {
     next();
   }else{
     
@@ -29,7 +29,7 @@ app.use(function(req,res,next){
       if (decoded != null) {
         next();
       } else {
-        res.send({ message:"session expired." })
+        res.send({ success:false, message:"session expired." })
       }
 
     });

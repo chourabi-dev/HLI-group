@@ -24,6 +24,7 @@ export default class TodoItem extends React.Component{
     deleteTodo(){
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", localStorage.getItem('access-token') )
 
         var raw = "";
 
@@ -46,6 +47,7 @@ export default class TodoItem extends React.Component{
     updateTodo(){
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", localStorage.getItem('access-token') )
 
         var raw = JSON.stringify({"title":this.state.updateTitle,"content":this.state.updateContent});
 

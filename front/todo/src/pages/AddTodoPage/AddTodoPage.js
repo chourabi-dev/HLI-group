@@ -23,6 +23,7 @@ export default class AddTodoPage extends React.Component{
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", localStorage.getItem('access-token') )
 
         var raw = JSON.stringify({"title":this.state.title,"content":this.state.content});
 

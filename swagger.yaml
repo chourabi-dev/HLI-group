@@ -1,0 +1,128 @@
+swagger: "2.0"
+info:
+  description: "this is a simple todo app API"
+  version: "1.0.0"
+  title: "TODO API"
+  contact:
+    email: "tchourabi@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/v1"
+
+schemes:
+- "http"
+
+paths:
+  /API/todo:
+    post:
+      parameters:
+      - in: header
+        name: Authorization
+        type: "string"
+        required: true
+        
+      - name: "todo"
+        in: "body"
+        required: true
+        schema:
+          $ref : "#/definitions/todo"
+        
+      summary: "add todo"
+      description: "add new todo"
+      responses:
+        200:
+          description: OK
+          
+    get:
+      parameters:
+      - in: header
+        name: Authorization
+        type: "string"
+        required: true
+        
+      summary: "list of todos"
+      description: "get a full list of todos"
+      responses:
+        200:
+          description: OK
+    delete:
+      parameters:
+      - in: header
+        name: Authorization
+        type: "string"
+        required: true
+        
+      - name: "id"
+        in: "query"
+        type: "string"
+        required: true
+    
+      summary: "delete a todo"
+      description: "delete a todo using it's ID"
+      responses:
+        200:
+          description: OK
+    put:
+      parameters:
+      - in: header
+        name: Authorization
+        type: "string"
+        required: true
+      
+      - name: "id"
+        in: "query"
+        type: "string"
+        required: true
+        
+      - name: "todo"
+        in: "body"
+        required: true
+        schema:
+          $ref : "#/definitions/todo"
+        
+      summary: "update todo"
+      description: "update todo using ID"
+      responses:
+        200:
+          description: OK
+  /API/auth:
+    post:
+      summary: "auth"
+      description: "we use this api to auth"
+      responses:
+        200:
+          description: OK
+      
+      parameters:
+        
+      - name: "auth"
+        in: "body"
+        required: true
+        schema:
+          $ref : "#/definitions/auth"
+    
+    
+      
+    
+    
+definitions:
+  todo:
+    description: todo object
+    properties:
+      title:
+        type: string
+        description: task object name
+      content:
+        type: string
+        description: todo description
+  auth:
+    description: auth object
+    properties:
+      username:
+        type: string
+        description: username
+      password:
+        type: string
+        description: password

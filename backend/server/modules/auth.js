@@ -82,7 +82,7 @@ exports.auth = function(req,res){
 
                 db.collection("users").find({username:jsonBody.username, password:   sha1(jsonBody.password)  }).toArray().then((check)=>{
                   if (check.length === 1) {
-                    const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (20),  username: jsonBody.username }, process.env.secret)
+                    const token = jwt.sign({ exp: Math.floor(Date.now() / 1000) + (3600),  username: jsonBody.username }, process.env.secret)
                     
                     console.log(token);
                     

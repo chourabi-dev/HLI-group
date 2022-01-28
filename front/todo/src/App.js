@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import AddTodoPage from './pages/AddTodoPage/AddTodoPage';
+import SiginPage from './pages/Signinpage/Signinpage';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -28,6 +29,10 @@ export default class App extends React.Component {
               <Route path="/" component={HomePage} exact />
               <Route path="/home" component={HomePage}  exact />
               <Route path="/todo/add" component={AddTodoPage} exact  />
+              <Route path="/auth" component={SiginPage} exact  />
+              
+
+              
               
               <Route path="*" component={notfounderror}   />
               

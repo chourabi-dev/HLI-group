@@ -14,11 +14,14 @@ export default class HomePage extends React.Component{
         this.initData = this.initData.bind(this);
     }
 
+ 
+
 
     initData(){
         // CALL API
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", localStorage.getItem('access-token') )
 
         var requestOptions = {
         method: 'GET',
@@ -29,7 +32,12 @@ export default class HomePage extends React.Component{
         fetch("http://localhost:8080/V1/API/todo", requestOptions)
         .then(response => response.json())
         .then(result =>{
-            console.log(result)
+            if (result.success == false) {
+                alert(result.message);
+                localStorage.clear();
+
+                this.props.history.push("/auth");
+            }
 
             this.setState({
                 todos : result
@@ -39,7 +47,15 @@ export default class HomePage extends React.Component{
     }
 
     componentDidMount(){
-        this.initData();
+
+        if ( localStorage.getItem('access-token') == null  ) {
+            this.props.history.push("/auth");
+        }else{
+            this.initData();
+        }
+
+
+       
     }
 
 
